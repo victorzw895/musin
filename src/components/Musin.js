@@ -8,6 +8,9 @@ import Keyboard from "./Keyboard";
 import logo from "../logo.svg";
 import "../Musin.css";
 
+import Leap from "leapjs";
+import "../plugins/leap.screen-position";
+
 class App extends Component {
   constructor() {
     super();
@@ -30,6 +33,16 @@ class App extends Component {
         token: _token
       });
     }
+
+    Leap.loop(function(frame) {
+      console.log(frame.hands.length);
+    });
+
+    Leap.loop({
+      hand: function(hand) {
+        console.log(hand.screenPosition());
+      }
+    }).use("screenPosition");
   }
 
   render() {

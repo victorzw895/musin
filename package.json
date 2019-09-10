@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "jquery": "^3.4.1",
+    "leapjs": "^0.6.4",
+    "leapjs-plugins": "^0.1.12",
     "nexusui": "^2.0.10",
     "nprogress": "^0.2.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
+    "three": "^0.108.0",
     "tone": "^13.8.25"
   },
   "scripts": {
