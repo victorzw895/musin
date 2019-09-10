@@ -20,12 +20,14 @@ code {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
-ul {
-  list-style: none;
   display: flex;
 }
-ul .key {
+
+ul {
+  list-style: none;
+}
+
+#keyboard .key {
   position: relative;
   width: 60px;
   height: 180px;
@@ -41,10 +43,10 @@ ul .key {
   padding-bottom: 10px;
   font-weight: bold;
 }
-ul .key:last-child {
+#keyboard .key:last-child {
   border-right: 1px solid black;
 }
-ul .black-key {
+#keyboard .black-key {
   position: absolute;
   top: -1px;
   left: 37.5px;
@@ -62,5 +64,56 @@ ul .black-key {
 }
 
 #container {
+  display: none;
+}
+
+.featured {
+  vertical-align: middle;
+  border-radius: 100%;
+  margin: 0.7em 1em;
+}
+
+.list-songs {
+  display: inline;
+}
+
+#list {
+  height: 45vh;
+  scrollbar-base-color: gold;
+  overflow: auto;
+}
+
+#song-chords {
+  height: 30vh;
+  overflow: auto;
+}
+
+#search-song {
+  margin-bottom: 1.3em;
+}
+
+.chordline {
+  margin-top: 1px;
+  line-height: 1.5em;
+}
+
+.chordline > span {
+  position: relative;
+  font-weight: normal;
+  line-height: 2.3em;
+}
+
+.chordline span strong {
+  display: inline-block;
+  line-height: 2em;
+  position: relative;
+  width: 0;
+  top: -1.3em;
+  left: 0;
+  font: bold 80%/1 sans-serif;
+  color: #006181;
+}
+
+.chordline span strong span {
   display: none;
 }

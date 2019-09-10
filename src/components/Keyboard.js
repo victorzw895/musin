@@ -12,7 +12,8 @@ export default class Keyboard extends Component {
       instrument: "",
       keys: [],
       setKeys: false,
-      playingKeys: []
+      playingKeys: new Map(),
+      firstNote: 36
     };
     // this._handleClick = this._handleClick.bind(this);
     this._handleMouseDown = this._handleMouseDown.bind(this);
@@ -48,7 +49,8 @@ export default class Keyboard extends Component {
 
   addKeys() {
     this.setState({ setKeys: true });
-    let j = 2;
+    let firstNote = this.state.firstNote;
+    // C0 is tone firstNote note 12
     // i up to 25, 49, 61, 76, 88
     // 25 C to C // 15 white keys
     // 37 F to F // 22 white
@@ -57,36 +59,42 @@ export default class Keyboard extends Component {
     // 76 E to G // 45 white
     // 88 A to C // 52 white
     const keys = [];
-    for (let i = 1; i <= 21; i++) {
-      let key;
+
+    // finding sharp keys
+    for (let i = 1; i <= 36; i++) {
       let hasSharp;
-      if (i % 7 === 1) {
-        key = "C";
+      let whiteKey;
+      if (i % 12 === 1) {
+        whiteKey = true;
         hasSharp = true;
-      } else if (i % 7 === 2) {
-        key = "D";
+      } else if (i % 12 === 3) {
+        whiteKey = true;
         hasSharp = true;
-      } else if (i % 7 === 3) {
-        key = "E";
-      } else if (i % 7 === 4) {
-        key = "F";
+      } else if (i % 12 === 5) {
+        whiteKey = true;
+      } else if (i % 12 === 6) {
+        whiteKey = true;
         hasSharp = true;
-      } else if (i % 7 === 5) {
-        key = "G";
+      } else if (i % 12 === 8) {
+        whiteKey = true;
         hasSharp = true;
-      } else if (i % 7 === 6) {
-        key = "A";
+      } else if (i % 12 === 10) {
+        whiteKey = true;
         hasSharp = true;
-      } else if (i % 7 === 0) {
-        key = "B";
-        j += 1;
+      } else if (i % 12 === 0) {
+        whiteKey = true;
       }
 
-      keys.push({
-        note: `${key}${j}`,
-        sharp: hasSharp ? `${key}#${j}` : null
-      });
+      if (whiteKey) {
+        keys.push({
+          sharp: hasSharp ? true : false,
+          frequency: firstNote++
+        });
+      } else {
+        firstNote++;
+      }
     }
+
     this.setState({
       keys: keys
     });
@@ -97,39 +105,102 @@ export default class Keyboard extends Component {
   //   }
 
   _handleMouseDown(e) {
-    if (e.target.dataset.note) {
+    const { freq } = e.target.dataset;
+    console.log(freq);
+    if (freq) {
       e.preventDefault();
-      this.state.instrument.triggerAttack(e.target.dataset.note);
+      this.state.instrument.triggerAttack(
+        Tone.Frequency(freq, "midi").toNote()
+      );
     }
   }
 
   _handleMouseUp(e) {
-    if (e.target.dataset.note) {
+    const { freq } = e.target.dataset;
+    if (freq) {
       e.preventDefault();
-      this.state.instrument.triggerRelease(e.target.dataset.note);
+      this.state.instrument.triggerRelease(
+        Tone.Frequency(freq, "midi").toNote()
+      );
+    }
+  }
+
+  getFrequency(eKey, freq) {
+    switch (eKey) {
+      case "a":
+        return freq;
+      case "w":
+        return (freq += 1);
+      case "s":
+        return (freq += 2);
+      case "e":
+        return (freq += 3);
+      case "d":
+        return (freq += 4);
+      case "f":
+        return (freq += 5);
+      case "t":
+        return (freq += 6);
+      case "g":
+        return (freq += 7);
+      case "y":
+        return (freq += 8);
+      case "h":
+        return (freq += 9);
+      case "u":
+        return (freq += 10);
+      case "j":
+        return (freq += 11);
+      case "k":
+        return (freq += 13);
+      case "o":
+        return (freq += 14);
+      case "l":
+        return (freq += 15);
+      case "p":
+        return (freq += 16);
+      case ";":
+        return (freq += 17);
+      default:
+        return;
     }
   }
 
   _handleKeyDown(e) {
+    const { playingKeys, firstNote } = this.state;
     console.log(e.metaKey);
     console.log(e.key);
     console.log(e.altKey);
-    switch (e.key) {
-      case "a":
-        //   this.setState({playingKeys: })
-        return this.state.instrument.triggerAttack("C2");
-      default:
-        return;
+    console.log(playingKeys);
+    console.log(playingKeys.get(e.key));
+
+    // Tone.Frequency(12, "midi").toNote() => C0
+
+    let note = this.getFrequency(e.key, firstNote);
+
+    if (note && !playingKeys.has(note)) {
+      this.state.instrument.triggerAttack(
+        Tone.Frequency(note, "midi").toNote()
+      );
+      playingKeys.set(note, true);
+      return;
     }
+    console.log(this.getFrequency(e.key, firstNote));
   }
 
   _handleKeyUp(e) {
-    switch (e.key) {
-      case "a":
-        return this.state.instrument.triggerRelease("C2");
-      default:
-        return;
+    const { playingKeys, firstNote } = this.state;
+
+    let note = this.getFrequency(e.key, firstNote);
+
+    if (note && playingKeys.has(note)) {
+      this.state.instrument.triggerRelease(
+        Tone.Frequency(note, "midi").toNote()
+      );
+      playingKeys.delete(note);
+      return;
     }
+    console.log(this.getFrequency(e.key, firstNote));
   }
 
   render() {
@@ -147,13 +218,13 @@ export default class Keyboard extends Component {
             tabIndex="0"
           >
             {this.state.keys.map(key => (
-              <li data-note={key.note} className="key">
+              <li key={key.frequency} data-freq={key.frequency} className="key">
                 {key.sharp ? (
-                  <div data-note={key.sharp} className="black-key">
-                    f
-                  </div>
+                  <div
+                    data-freq={key.frequency + 1}
+                    className="black-key"
+                  ></div>
                 ) : null}
-                a
               </li>
             ))}
           </ul>
