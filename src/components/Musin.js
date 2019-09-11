@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as $ from "jquery";
-import { authEndpoint, clientId, redirectUri } from "../config";
+
+import { authEndpoint, clientId, redirectUri } from "../lib/config";
 import hash from "../hash";
 // import Player from "./PlayerOld";
 import Player from "./Player";
@@ -49,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           {!this.state.token && (
             <a
               className="btn btn--loginApp-link"

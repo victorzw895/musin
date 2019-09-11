@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SampleLibrary from "../Tonejs-Instruments";
-import Nexus from "nexusui";
 import NProgress from "nprogress";
 import Tone from "tone";
 import * as $ from "jquery";
@@ -175,6 +174,9 @@ export default class Keyboard extends Component {
     console.log(playingKeys.get(e.key));
 
     // Tone.Frequency(12, "midi").toNote() => C0
+    if (e.key === "Tab") {
+      e.preventDefault();
+    }
 
     let note = this.getFrequency(e.key, firstNote);
 
