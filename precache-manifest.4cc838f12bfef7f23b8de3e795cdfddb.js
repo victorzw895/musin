@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3193dd94ed4c05de985d07a4f9fbff92",
+    "revision": "05e2c38aeff951083a4d5440e26c97ef",
     "url": "/musin/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/musin/static/css/2.ec8d020b.chunk.css"
   },
   {
-    "revision": "d58c88dbc73aa33bd2e8",
+    "revision": "6405c6121757bcc96392",
     "url": "/musin/static/css/main.8f812ba7.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/musin/static/js/2.c5d3ce91.chunk.js"
   },
   {
-    "revision": "d58c88dbc73aa33bd2e8",
-    "url": "/musin/static/js/main.72ff73fa.chunk.js"
+    "revision": "6405c6121757bcc96392",
+    "url": "/musin/static/js/main.a91c2f55.chunk.js"
   },
   {
     "revision": "3ae8649a24ab0c728747",
