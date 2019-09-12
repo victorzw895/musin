@@ -20,8 +20,7 @@ code {
   justify-content: center;
   align-items: center;
   /* min-height: 100vh; */
-  min-height: 30vh;
-  display: flex;
+  min-height: 35vh;
 }
 
 ul {
@@ -86,6 +85,7 @@ ul {
 
 #list {
   height: 45vh;
+  width: 70vw;
   scrollbar-base-color: gold;
   overflow: auto;
 }

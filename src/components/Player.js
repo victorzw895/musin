@@ -36,7 +36,6 @@ export default class Player extends Component {
   fetchSongs(query) {
     Api.getSpotifySongs(query, this.props.token).then(response => {
       this.setState({ songId: "", searchResults: response.data.tracks.items });
-      console.log(response.data);
     });
   }
 

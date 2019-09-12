@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import * as $ from "jquery";
 
 import { authEndpoint, clientId, redirectUri } from "../lib/config";
 import hash from "../hash";
-// import Player from "./PlayerOld";
+
+// MUSIC PLAYER, CHORDS, KEYBOARD
 import Player from "./Player";
 import Keyboard from "./Keyboard";
-import logo from "../logo.svg";
 import "../Musin.css";
 
+// LEAP MOTION CONTROLLER
 import Leap from "leapjs";
 import "../plugins/leap.screen-position";
+
+// SEMANTIC UI CSS
+import "semantic-ui-css/semantic.min.css";
 
 class App extends Component {
   constructor() {

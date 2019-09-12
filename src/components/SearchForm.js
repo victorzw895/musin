@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, Input } from "semantic-ui-react";
 
 export default class SearchForm extends Component {
   constructor() {
@@ -25,7 +26,8 @@ export default class SearchForm extends Component {
       <form id="search-song" onSubmit={this._handleSubmit}>
         <label>Search Song: </label>
         {/* <br /> */}
-        <input
+        <Input
+          size="mini"
           type="text"
           placeholder="Real Name"
           onChange={this._handleChange}
@@ -33,9 +35,9 @@ export default class SearchForm extends Component {
           tabIndex="-1"
         />
         {/* <br /> */}
-        <button type="search" tabIndex="-1">
+        <Button size="big" inverted color="blue" type="search" tabIndex="-1">
           Search
-        </button>
+        </Button>
       </form>
     );
   }
