@@ -24,8 +24,10 @@ export default class SearchForm extends Component {
   render() {
     return (
       <form id="search-song" onSubmit={this._handleSubmit}>
+        <br />
         <label>Search Song: </label>
-        {/* <br /> */}
+        <br />
+        <br />
         <Input
           size="mini"
           type="text"
@@ -33,11 +35,19 @@ export default class SearchForm extends Component {
           onChange={this._handleChange}
           autoFocus
           tabIndex="-1"
-        />
-        {/* <br /> */}
-        <Button size="big" inverted color="blue" type="search" tabIndex="-1">
-          Search
-        </Button>
+          action
+        >
+          <input />
+          <Button
+            size="large"
+            inverted
+            color="blue"
+            type="search"
+            tabIndex="-1"
+          >
+            Search
+          </Button>
+        </Input>
       </form>
     );
   }

@@ -3,6 +3,7 @@ import Chords from "./Chords";
 import SearchForm from "./SearchForm";
 import SearchSong from "./SearchSong";
 import * as $ from "jquery";
+import { Divider, Grid, Header, Segment } from "semantic-ui-react";
 
 // DATABASE REQUESTS
 const Api = require("../lib/Api.js");
@@ -17,7 +18,8 @@ export default class Player extends Component {
       currentTime: "",
       strongPerChordline: [],
       songDuration: 0,
-      totalStrong: 0
+      totalStrong: 0,
+      result: "Loading..."
     };
     this.selectSong = this.selectSong.bind(this);
     this.fetchChords = this.fetchChords.bind(this);
@@ -40,27 +42,26 @@ export default class Player extends Component {
   }
 
   selectSong(id, songName, artistName, duration) {
-    console.log(id);
-    console.log(duration, "in ms");
-    this.setState({ songId: id, songDuration: duration });
-    this.fetchChords(id, songName, artistName);
+    this.setState({ songId: id, songDuration: duration, songName, artistName });
+    this.fetchChords(songName, artistName);
   }
 
-  fetchChords(id, songName, artistName) {
-    const { token } = this.props;
+  fetchChords(songName, artistName) {
     this.setState({ loadedSong: [] });
 
-    console.log(songName, artistName, token);
-    Api.getAudioInfo(id, token).then(response => {
-      console.log(response);
-      this.setState({ songDuration: response.data.track.duration });
-    });
+    // Api.getAudioInfo(id, token).then(response => {
+    //   console.log(response);
+    //   this.setState({ songDuration: response.data.track.duration });
+    // });
     Api.getSongChords(songName)
       .then(response => {
         const results = response.data.objects.filter(song =>
           song.authors.some(author => author.name === artistName)
         );
         this.setState({ loadedSong: results });
+        if (results.length !== 0) {
+          this.setState({ result: "No Chords Available" });
+        }
         this.getChordInfo(results[0]);
       })
       .catch(error => {
@@ -69,22 +70,11 @@ export default class Player extends Component {
   }
 
   getChordInfo(results) {
-    let chordline = $("#song-chords").children();
-
     let chordlineStrongs = [];
-    let totalStrong = 0;
-    let strongCount = 0;
-    chordline.each(i => {
-      strongCount = 0;
-      $(chordline[i].children).each(b => {
-        $(chordline[i].children[b].children).each(c => {
-          if ($(chordline[i].children[b].children[c])) {
-            strongCount += 1;
-          }
-        });
-      });
-      chordlineStrongs.push(strongCount);
-      totalStrong += strongCount;
+    let totalStrong = $("#song-chords strong").length;
+
+    $("#song-chords .chordline").map((i, chordline) => {
+      chordlineStrongs.push($(chordline).find("strong").length);
     });
     this.setState({
       strongPerChordline: chordlineStrongs,
@@ -104,6 +94,7 @@ export default class Player extends Component {
       let duration = (songDuration / totalStrong) * strongPerChordline[i];
       durationPerChordline.push(duration);
       durationCount += duration;
+      // console.log($(`.chordline:eq(${i})`).height());
 
       setTimeout(() => {
         scroll += $(`.chordline:eq(${i})`).height();
@@ -113,26 +104,56 @@ export default class Player extends Component {
   }
 
   render() {
-    const { songId, loadedSong, searchResults } = this.state;
+    const {
+      songId,
+      loadedSong,
+      searchResults,
+      songName,
+      artistName,
+      result
+    } = this.state;
     const { token } = this.props;
 
     let displayChords;
 
-    if (songId !== "" && loadedSong.length !== 0) {
-      // console.log($(loadedSong[0].body_chords_html).find("strong"));
+    if (songId !== "") {
       displayChords = (
-        <div>
-          <div id="left-side">
-            <SearchForm search={this.fetchSongs} />
-            <Chords song={loadedSong[0]} songId={songId} />
-          </div>
-          <div
-            id="song-chords"
-            dangerouslySetInnerHTML={{
-              __html: loadedSong[0].body_chords_html
-            }}
-          ></div>
-        </div>
+        <Segment
+          inverted
+          placeholder
+          size="massive"
+          style={{ margin: "0 2em", width: "100vw", maxHeight: "70vh" }}
+        >
+          <Grid columns={2} stackable textAlign="center">
+            <Divider vertical />
+            <Grid.Row verticalAlign="middle">
+              <Grid.Column>
+                <SearchForm search={this.fetchSongs} />
+                <Chords
+                  song={loadedSong}
+                  songId={songId}
+                  startScroll={this.startScroll}
+                />
+              </Grid.Column>
+
+              <Grid.Column>
+                <Header as="h2" dividing inverted>
+                  {`${songName} - ${artistName}`}
+                </Header>
+                {loadedSong.length !== 0 ? (
+                  <div
+                    id="song-chords"
+                    dangerouslySetInnerHTML={{
+                      __html: loadedSong[0].body_chords_html
+                    }}
+                  ></div>
+                ) : (
+                  <div id="song-chords">{result}</div>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
       );
     } else {
       displayChords = (

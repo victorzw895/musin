@@ -14,13 +14,16 @@ code {
     monospace;
 }
 
+#content {
+  max-height: 35vh;
+}
+
 #keyboard {
   font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 100vh; */
-  min-height: 35vh;
+  padding-top: 0.5em;
 }
 
 ul {
@@ -33,7 +36,7 @@ ul {
   height: 180px;
   border: 1px solid black;
   border-right: none;
-  background: #fffff0;
+  background: #f1f1ec;
   border-radius: 5px;
   box-shadow: 0px 3px 5px #666;
   cursor: pointer;
@@ -43,6 +46,7 @@ ul {
   padding-bottom: 10px;
   font-weight: bold;
 }
+
 #keyboard .key:last-child {
   border-right: 1px solid black;
 }
@@ -52,7 +56,7 @@ ul {
   left: 37.5px;
   width: 45px;
   height: 120px;
-  background: black;
+  background: rgb(17, 17, 17);
   border-radius: 5px;
   box-shadow: 0px 3px 5px #666;
   z-index: 999;
@@ -63,10 +67,8 @@ ul {
   color: white;
 }
 
-#left-side {
-  position: fixed;
-  left: 5vw;
-  top: 50px;
+#keyboard .pressed {
+  background-color: red;
 }
 
 #container {
@@ -93,10 +95,7 @@ ul {
 #song-chords {
   height: 60vh;
   overflow: auto;
-  margin: 20px 0 30px;
-  position: fixed;
-  right: 5vw;
-  top: 0px;
+  padding: 2em;
 }
 
 #search-song {

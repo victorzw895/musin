@@ -32,7 +32,6 @@ export default class Keyboard extends Component {
       }).toMaster()
     });
 
-    // console.log("running");
     Tone.Buffer.on("load", function() {
       $("#container").css({ display: "block" });
       $("#loading").css({ display: "none" });
@@ -99,13 +98,8 @@ export default class Keyboard extends Component {
     });
   }
 
-  //   _handleClick(e) {
-  //     this.state.instrument.triggerAttack(Tone.Frequency(12, "midi").toNote());
-  //   }
-
   _handleMouseDown(e) {
     const { freq } = e.target.dataset;
-    console.log(freq);
     if (freq) {
       e.preventDefault();
       this.state.instrument.triggerAttack(
@@ -126,40 +120,78 @@ export default class Keyboard extends Component {
 
   getFrequency(eKey, freq) {
     switch (eKey) {
-      case "a":
+      case "q":
         return freq;
-      case "w":
+      case "2":
         return (freq += 1);
-      case "s":
+      case "w":
         return (freq += 2);
-      case "e":
+      case "3":
         return (freq += 3);
-      case "d":
+      case "e":
         return (freq += 4);
-      case "f":
+      case "r":
         return (freq += 5);
-      case "t":
+      case "5":
         return (freq += 6);
-      case "g":
+      case "t":
         return (freq += 7);
-      case "y":
+      case "6":
         return (freq += 8);
-      case "h":
+      case "y":
         return (freq += 9);
-      case "u":
+      case "7":
         return (freq += 10);
-      case "j":
+      case "u":
         return (freq += 11);
-      case "k":
+      case "i":
+        return (freq += 12);
+      case "9":
         return (freq += 13);
       case "o":
         return (freq += 14);
-      case "l":
+      case "0":
         return (freq += 15);
       case "p":
         return (freq += 16);
-      case ";":
+      case "[":
         return (freq += 17);
+      case "=":
+        return (freq += 18);
+      case "z":
+        return (freq += 19);
+      case "s":
+        return (freq += 20);
+      case "x":
+        return (freq += 21);
+      case "d":
+        return (freq += 22);
+      case "c":
+        return (freq += 23);
+      case "v":
+        return (freq += 24);
+      case "g":
+        return (freq += 25);
+      case "b":
+        return (freq += 26);
+      case "h":
+        return (freq += 27);
+      case "n":
+        return (freq += 28);
+      case "m":
+        return (freq += 29);
+      case "k":
+        return (freq += 30);
+      case ",":
+        return (freq += 31);
+      case "l":
+        return (freq += 32);
+      case ".":
+        return (freq += 33);
+      case ";":
+        return (freq += 34);
+      case "/":
+        return (freq += 35);
       default:
         return;
     }
@@ -167,11 +199,6 @@ export default class Keyboard extends Component {
 
   _handleKeyDown(e) {
     const { playingKeys, firstNote } = this.state;
-    console.log(e.metaKey);
-    console.log(e.key);
-    console.log(e.altKey);
-    console.log(playingKeys);
-    console.log(playingKeys.get(e.key));
 
     // Tone.Frequency(12, "midi").toNote() => C0
     if (e.key === "Tab") {
@@ -180,14 +207,13 @@ export default class Keyboard extends Component {
 
     let note = this.getFrequency(e.key, firstNote);
 
-    if (note && !playingKeys.has(note)) {
+    if (note && playingKeys.get(note) !== "pressed") {
       this.state.instrument.triggerAttack(
         Tone.Frequency(note, "midi").toNote()
       );
-      playingKeys.set(note, true);
+      this.setState(playingKeys.set(note, "pressed"));
       return;
     }
-    console.log(this.getFrequency(e.key, firstNote));
   }
 
   _handleKeyUp(e) {
@@ -195,19 +221,24 @@ export default class Keyboard extends Component {
 
     let note = this.getFrequency(e.key, firstNote);
 
-    if (note && playingKeys.has(note)) {
+    if (note && playingKeys.get(note) === "pressed") {
       this.state.instrument.triggerRelease(
         Tone.Frequency(note, "midi").toNote()
       );
-      playingKeys.delete(note);
+      this.setState(playingKeys.set(note, ""));
       return;
     }
-    console.log(this.getFrequency(e.key, firstNote));
   }
 
   render() {
+    const { playingKeys } = this.state;
     return (
-      <div id="content">
+      <div
+        id="content"
+        onKeyDown={this._handleKeyDown}
+        onKeyUp={this._handleKeyUp}
+        tabIndex="0"
+      >
         <h3 id="loading">Loading...</h3>
 
         <div id="container">
@@ -215,16 +246,25 @@ export default class Keyboard extends Component {
             id="keyboard"
             onMouseDown={this._handleMouseDown}
             onMouseUp={this._handleMouseUp}
-            onKeyDown={this._handleKeyDown}
-            onKeyUp={this._handleKeyUp}
-            tabIndex="0"
           >
             {this.state.keys.map(key => (
-              <li key={key.frequency} data-freq={key.frequency} className="key">
+              <li
+                key={key.frequency}
+                data-freq={key.frequency}
+                className={`key ${
+                  playingKeys.has(key.frequency)
+                    ? playingKeys.get(key.frequency)
+                    : ""
+                }`}
+              >
                 {key.sharp ? (
                   <div
                     data-freq={key.frequency + 1}
-                    className="black-key"
+                    className={`black-key ${
+                      playingKeys.get(key.frequency + 1)
+                        ? playingKeys.get(key.frequency + 1)
+                        : ""
+                    }`}
                   ></div>
                 ) : null}
               </li>

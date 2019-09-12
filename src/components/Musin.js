@@ -24,12 +24,7 @@ class App extends Component {
   }
   componentDidMount() {
     // Set token
-    console.log(window.location.hash);
-    console.log(hash);
-    console.log(hash.access_token);
     let _token = hash.access_token;
-
-    console.log(_token);
 
     if (_token) {
       // Set token

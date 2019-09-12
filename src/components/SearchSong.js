@@ -30,6 +30,7 @@ export default class SearchSong extends Component {
       >
         {searchResults.map(song => (
           <List.Item
+            key={song.id}
             id={song.id}
             className="search-list"
             onClick={() =>
