@@ -12,10 +12,10 @@ export default class Player extends Component {
       songId: "",
       loadedSong: [],
       searchResults: [],
-      scroll: 0,
       currentTime: "",
       strongPerChordline: [],
-      songDuration: 0
+      songDuration: 0,
+      totalStrong: 0
     };
     this.selectSong = this.selectSong.bind(this);
     this.fetchChords = this.fetchChords.bind(this);
@@ -28,7 +28,6 @@ export default class Player extends Component {
       this.setState({
         currentTime: new Date().getSeconds()
       });
-      console.log("run");
     }, 1000);
   }
 
@@ -41,7 +40,8 @@ export default class Player extends Component {
 
   selectSong(id, songName, artistName, duration) {
     console.log(id);
-    this.setState({ songId: id, songDuration: duration / 1000 });
+    console.log(duration, "in ms");
+    this.setState({ songId: id, songDuration: duration });
     this.fetchChords(id, songName, artistName);
   }
 
@@ -54,20 +54,24 @@ export default class Player extends Component {
       console.log(response);
       this.setState({ songDuration: response.data.track.duration });
     });
-    Api.getSongChords(songName).then(response => {
-      const results = response.data.objects.filter(song =>
-        song.authors.some(author => author.name === artistName)
-      );
-      console.log(results);
-      this.setState({ loadedSong: results });
-      this.getChordInfo(results[0]);
-    });
+    Api.getSongChords(songName)
+      .then(response => {
+        const results = response.data.objects.filter(song =>
+          song.authors.some(author => author.name === artistName)
+        );
+        this.setState({ loadedSong: results });
+        this.getChordInfo(results[0]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   getChordInfo(results) {
     let chordline = $("#song-chords").children();
 
     let chordlineStrongs = [];
+    let totalStrong = 0;
     let strongCount = 0;
     chordline.each(i => {
       strongCount = 0;
@@ -79,44 +83,32 @@ export default class Player extends Component {
         });
       });
       chordlineStrongs.push(strongCount);
+      totalStrong += strongCount;
     });
-    this.setState({ strongPerChordline: chordlineStrongs });
+    this.setState({
+      strongPerChordline: chordlineStrongs,
+      totalStrong: totalStrong
+    });
   }
 
   startScroll() {
-    const { currentTime, strongPerChordline, songDuration } = this.state;
+    const { strongPerChordline, songDuration, totalStrong } = this.state;
     let $chords = $("#song-chords");
 
     let durationPerChordline = [];
-    let scroll = this.state.scroll + 20;
+    let scroll = 0;
+    let durationCount = 0;
 
     for (let i = 0; i < strongPerChordline.length; i++) {
-      durationPerChordline.push(
-        (songDuration / strongPerChordline.length) * strongPerChordline[i]
-      );
-      // setTimeout(() => {
-      //   // this.setState({
-      //   //   scroll: (scroll += 20)
-      //   // });
-      //   $chords.scrollTop(scroll);
-      // }, 1000);
+      let duration = (songDuration / totalStrong) * strongPerChordline[i];
+      durationPerChordline.push(duration);
+      durationCount += duration;
+
+      setTimeout(() => {
+        scroll += $(`.chordline:eq(${i})`).height();
+        $chords.scrollTop(scroll);
+      }, durationCount);
     }
-    console.log(durationPerChordline);
-
-    // let scroll = this.state.scroll + 20;
-    // const intervalId = setInterval(() => {
-    //   this.setState({
-    //     scroll: (scroll += 20)
-    //   });
-    //   if ($chords.scrollTop + $chords.clientHeight === $chords.scrollHeight) {
-    //     clearInterval(intervalId);
-    //   }
-    //   $chords.scrollTop(scroll);
-    // }, 1000);
-
-    // console.log($("#song-chords").scrollTop());
-    // this.setState({ scroll: scroll });
-    // console.log(scroll);
   }
 
   render() {
@@ -135,7 +127,7 @@ export default class Player extends Component {
             frameborder="0"
             allowtransparency="true"
             allow="encrypted-media"
-            tabindex="-1"
+            tabIndex="-1"
           ></iframe>
           <button onClick={this.startScroll}>Start Scroll</button>
         </div>
@@ -170,7 +162,6 @@ export default class Player extends Component {
         {songId !== "" && loadedSong.length !== 0 ? (
           displayChords
         ) : (
-          // <Chords song={loadedSong} />
           <div>
             <SearchForm search={this.fetchSongs} />
             <SearchSong
@@ -260,10 +251,10 @@ class SearchForm extends Component {
           placeholder="Real Name"
           onChange={this._handleChange}
           autoFocus
-          tabindex="-1"
+          tabIndex="-1"
         />
         {/* <br /> */}
-        <button type="search" tabindex="-1">
+        <button type="search" tabIndex="-1">
           Search
         </button>
       </form>

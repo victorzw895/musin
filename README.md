@@ -1,5 +1,19 @@
 IMPROVISATION APP
 
+# TODO
+
+1. Keyboard keys CSS, highlight ones being pressed
+2. Error handling / Validations.
+   - If song search returns no songs
+   - If selected song has no chords
+   - If song chords are not in original key
+3. Add Original key info, add transposer
+4. Get new chord images from different API
+5. Consider not using Spotify iframe and build own player.
+   - To sync play button with autoscroll
+6. Overall CSS
+7. Leap Motion
+
 # Challenges
 
 ### 1. Using Leap Motion Controller, how to add plugins to React
