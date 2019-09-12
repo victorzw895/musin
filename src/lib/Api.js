@@ -3,7 +3,7 @@
 let axios = require("axios");
 
 let spotifyURL = `https://api.spotify.com/v1/`;
-let guitarPartyURL = `http://api.guitarparty.com/v2/songs/`;
+let guitarPartyURL = `https://api.guitarparty.com/v2/songs/`;
 
 const guitarKey = process.env.REACT_APP_GUITAR_API_KEY;
 
