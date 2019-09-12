@@ -1,57 +1,73 @@
 import React, { Component } from "react";
 import * as $ from "jquery";
 
-// export default class Chords extends Component {
-//   //   constructor() {
-//   //     super();
-//   //     this.state = {
-//   //       loadedSong: []
-//   //     };
-//   //   }
+export default class Chords extends Component {
+  render() {
+    const { song, songId } = this.props;
 
-//   render() {
-//     const { song } = this.props;
-//     console.log(song[0]);
-//     let displayChords;
-//     if (song[0]) {
-//       displayChords = (
-//         <div>
-//           <h1>{`${song[0].title} - ${song[0].authors[0].name}`}</h1>
-//           <p>{song[0].body}</p>
-//           {song[0].chords.map(chords => (
-//             <img src={chords.image_url} alt={chords.name} />
-//           ))}
-//         </div>
-//       );
-//     } else {
-//       displayChords = <div>Loading</div>;
-//     }
-//     return { displayChords };
-//   }
-// }
+    let iframe;
+    if (songId !== "") {
+      iframe = (
+        <div>
+          <iframe
+            src={`https://open.spotify.com/embed/track/${songId}`}
+            title="player"
+            id="music-player"
+            width="300"
+            height="80"
+            frameborder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+            tabIndex="-1"
+          ></iframe>
+          <button onClick={this.startScroll}>Start Scroll</button>
+        </div>
+      );
+    }
 
-const Chords = props => {
-  console.log(props);
-  const { song } = this.props;
-  let displayChords;
-
-  if (song[0]) {
-    displayChords = (
+    return (
       <div>
-        <h1>{`${song[0].title} - ${song[0].authors[0].name}`}</h1>
-        <p>{song[0].body}</p>
-        <div>{song[0].body_chords_html}</div>
-        {song[0].chords.map(chords => (
+        <h2>{`${song.title} - ${song.authors[0].name}`}</h2>
+        {iframe}
+        {song.chords.map(chords => (
           <img src={chords.image_url} alt={chords.name} />
         ))}
       </div>
     );
-  } else {
-    displayChords = <div>Loading</div>;
   }
-  return { displayChords };
+}
 
-  //   return <div>Soon</div>;
-};
+// const Chords = () => {
+//   const { song, songId } = this.props;
 
-export default Chords;
+//   let iframe;
+//   if (songId !== "") {
+//     iframe = (
+//       <div>
+//         <iframe
+//           src={`https://open.spotify.com/embed/track/${songId}`}
+//           title="player"
+//           id="music-player"
+//           width="300"
+//           height="80"
+//           frameborder="0"
+//           allowtransparency="true"
+//           allow="encrypted-media"
+//           tabIndex="-1"
+//         ></iframe>
+//         <button onClick={this.startScroll}>Start Scroll</button>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div>
+//       <h2>{`${song.title} - ${song.authors[0].name}`}</h2>;{iframe}
+//       {song.chords.map(chords => (
+//         <img src={chords.image_url} alt={chords.name} />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default Chords;

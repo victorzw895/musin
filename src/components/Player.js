@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-// import Chords from "./Chords";
+import Chords from "./Chords";
+import SearchForm from "./SearchForm";
+import SearchSong from "./SearchSong";
 import * as $ from "jquery";
 
 // DATABASE REQUESTS
@@ -114,39 +116,16 @@ export default class Player extends Component {
   render() {
     const { songId, loadedSong, searchResults } = this.state;
     const { token } = this.props;
-    let iframe;
-    if (songId !== "") {
-      iframe = (
-        <div>
-          <iframe
-            src={`https://open.spotify.com/embed/track/${songId}`}
-            title="player"
-            id="music-player"
-            width="300"
-            height="80"
-            frameborder="0"
-            allowtransparency="true"
-            allow="encrypted-media"
-            tabIndex="-1"
-          ></iframe>
-          <button onClick={this.startScroll}>Start Scroll</button>
-        </div>
-      );
-    }
+
     let displayChords;
 
-    if (loadedSong.length !== 0) {
+    if (songId !== "" && loadedSong.length !== 0) {
       // console.log($(loadedSong[0].body_chords_html).find("strong"));
-
       displayChords = (
         <div>
           <div id="left-side">
             <SearchForm search={this.fetchSongs} />
-            <h2>{`${loadedSong[0].title} - ${loadedSong[0].authors[0].name}`}</h2>
-            {iframe}
-            {loadedSong[0].chords.map(chords => (
-              <img src={chords.image_url} alt={chords.name} />
-            ))}
+            <Chords song={loadedSong[0]} songId={songId} />
           </div>
           <div
             id="song-chords"
@@ -156,108 +135,18 @@ export default class Player extends Component {
           ></div>
         </div>
       );
-    }
-    return (
-      <div>
-        {songId !== "" && loadedSong.length !== 0 ? (
-          displayChords
-        ) : (
-          <div>
-            <SearchForm search={this.fetchSongs} />
-            <SearchSong
-              token={token}
-              loadSong={this.selectSong}
-              searchResults={searchResults}
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
-}
-
-class SearchSong extends Component {
-  constructor() {
-    super();
-
-    this._handleClick = this._handleClick.bind(this);
-  }
-
-  _handleClick(id, songName, artistName, duration) {
-    this.props.loadSong(id, songName, artistName, duration);
-  }
-
-  render() {
-    const { searchResults } = this.props;
-    return (
-      <div>
+    } else {
+      displayChords = (
         <div>
-          <ul id="list">
-            {searchResults.map(song => (
-              <li
-                id={song.id}
-                className="search-list"
-                onClick={() =>
-                  this._handleClick(
-                    song.id,
-                    song.name,
-                    song.artists[0].name,
-                    song.duration_ms
-                  )
-                }
-              >
-                <img
-                  className="featured"
-                  src={song.album.images[2].url}
-                  alt={song.album.name}
-                />
-                <p className="list-songs">{`${song.artists[0].name} - ${song.name}`}</p>
-              </li>
-            ))}
-          </ul>
+          <SearchForm search={this.fetchSongs} />
+          <SearchSong
+            token={token}
+            loadSong={this.selectSong}
+            searchResults={searchResults}
+          />
         </div>
-      </div>
-    );
-  }
-}
-
-class SearchForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      songQuery: null
-    };
-    this._handleSubmit = this._handleSubmit.bind(this);
-    this._handleChange = this._handleChange.bind(this);
-  }
-
-  _handleSubmit(e) {
-    e.preventDefault();
-    const { songQuery } = this.state;
-    this.props.search(songQuery);
-  }
-
-  _handleChange(e) {
-    this.setState({ songQuery: e.target.value });
-  }
-
-  render() {
-    return (
-      <form id="search-song" onSubmit={this._handleSubmit}>
-        <label>Search Song: </label>
-        {/* <br /> */}
-        <input
-          type="text"
-          placeholder="Real Name"
-          onChange={this._handleChange}
-          autoFocus
-          tabIndex="-1"
-        />
-        {/* <br /> */}
-        <button type="search" tabIndex="-1">
-          Search
-        </button>
-      </form>
-    );
+      );
+    }
+    return <div>{displayChords}</div>;
   }
 }

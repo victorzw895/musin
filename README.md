@@ -31,6 +31,7 @@ IMPROVISATION APP
 - Currently GuitarAPI returns either all the chords used or the lyrics with the chord progression/changes placed next the lyric, where the chords change.
 - Due to each song having a different tempo, rythm, length to each note or chord being played at a time, it is extremelly difficult to have it match up to the duration of the song.
 - Possible that another library is required to listen to the song and return the lyrics, in order to match the lyrics with the chords provided from GuitarAPI.
+- OR Possible if api returns each chord and how long each is played for
 
 ### 4. Use Leap Motion Controller to play 2D piano
 
