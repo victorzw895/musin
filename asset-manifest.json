@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/musin/static/css/main.8f812ba7.chunk.css",
+    "main.js": "/musin/static/js/main.d444e4ab.chunk.js",
+    "main.js.map": "/musin/static/js/main.d444e4ab.chunk.js.map",
+    "runtime~main.js": "/musin/static/js/runtime~main.c7521d5f.js",
+    "runtime~main.js.map": "/musin/static/js/runtime~main.c7521d5f.js.map",
+    "static/css/2.ec8d020b.chunk.css": "/musin/static/css/2.ec8d020b.chunk.css",
+    "static/js/2.c5d3ce91.chunk.js": "/musin/static/js/2.c5d3ce91.chunk.js",
+    "static/js/2.c5d3ce91.chunk.js.map": "/musin/static/js/2.c5d3ce91.chunk.js.map",
+    "index.html": "/musin/index.html",
+    "precache-manifest.2e4a78fbcc1a666bb44fbd68e304f444.js": "/musin/precache-manifest.2e4a78fbcc1a666bb44fbd68e304f444.js",
+    "service-worker.js": "/musin/service-worker.js",
+    "static/css/2.ec8d020b.chunk.css.map": "/musin/static/css/2.ec8d020b.chunk.css.map",
+    "static/css/main.8f812ba7.chunk.css.map": "/musin/static/css/main.8f812ba7.chunk.css.map",
+    "static/media/semantic.min.css": "/musin/static/media/outline-icons.ef60a4f6.woff"
+  }
+}
