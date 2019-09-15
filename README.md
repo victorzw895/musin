@@ -1,6 +1,6 @@
 [MUSIN](https://victorzw895.github.io/musin/)
 
-![Musin](./public/Musing.jpg "Musin")
+![Musin](./public/Musin.jpg "Musin")
 
 # Description
 
