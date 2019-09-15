@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "31f8310513a13c800559b4d3503f8c4c",
+    "revision": "ac42b8434207829fd73cc62ac4b7fb89",
     "url": "/musin/index.html"
   },
   {
-    "revision": "5b366175aa29f3dfd55a",
+    "revision": "0273809053d4dff7ab9f",
     "url": "/musin/static/css/2.ec8d020b.chunk.css"
   },
   {
-    "revision": "6405c6121757bcc96392",
+    "revision": "a1a3ad4749b010230424",
     "url": "/musin/static/css/main.8f812ba7.chunk.css"
   },
   {
-    "revision": "5b366175aa29f3dfd55a",
-    "url": "/musin/static/js/2.c5d3ce91.chunk.js"
+    "revision": "0273809053d4dff7ab9f",
+    "url": "/musin/static/js/2.43bbb443.chunk.js"
   },
   {
-    "revision": "6405c6121757bcc96392",
-    "url": "/musin/static/js/main.a91c2f55.chunk.js"
+    "revision": "a1a3ad4749b010230424",
+    "url": "/musin/static/js/main.cb1446f6.chunk.js"
   },
   {
     "revision": "3ae8649a24ab0c728747",
