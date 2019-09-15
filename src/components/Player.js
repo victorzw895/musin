@@ -16,9 +16,9 @@ export default class Player extends Component {
       loadedSong: [],
       searchResults: [],
       currentTime: "",
-      strongPerChordline: [],
+      chordsPerChordline: [],
       songDuration: 0,
-      totalStrong: 0,
+      totalChords: 0,
       result: "Loading..."
     };
     this.selectSong = this.selectSong.bind(this);
@@ -70,28 +70,28 @@ export default class Player extends Component {
   }
 
   getChordInfo(results) {
-    let chordlineStrongs = [];
-    let totalStrong = $("#song-chords strong").length;
+    let lineChords = [];
+    let totalChords = $("#song-chords strong").length;
 
     $("#song-chords .chordline").map((i, chordline) => {
-      chordlineStrongs.push($(chordline).find("strong").length);
+      lineChords.push($(chordline).find("strong").length);
     });
     this.setState({
-      strongPerChordline: chordlineStrongs,
-      totalStrong: totalStrong
+      chordsPerChordline: lineChords,
+      totalChords: totalChords
     });
   }
 
   startScroll() {
-    const { strongPerChordline, songDuration, totalStrong } = this.state;
+    const { chordsPerChordline, songDuration, totalChords } = this.state;
     let $chords = $("#song-chords");
 
     let durationPerChordline = [];
     let scroll = 0;
     let durationCount = 0;
 
-    for (let i = 0; i < strongPerChordline.length; i++) {
-      let duration = (songDuration / totalStrong) * strongPerChordline[i];
+    for (let i = 0; i < chordsPerChordline.length; i++) {
+      let duration = (songDuration / totalChords) * chordsPerChordline[i];
       durationPerChordline.push(duration);
       durationCount += duration;
       // console.log($(`.chordline:eq(${i})`).height());

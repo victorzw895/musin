@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SampleLibrary from "../Tonejs-Instruments";
-import NProgress from "nprogress";
 import Tone from "tone";
 import * as $ from "jquery";
 
@@ -24,7 +23,6 @@ export default class Keyboard extends Component {
   componentDidMount() {
     // KEYBOARD ////////////////////////////////////////////////////////////////////////
     // NProgress is for loading bar ////////////////////
-    NProgress.start();
     this.setState({
       instrument: SampleLibrary.load({
         instruments: "piano",

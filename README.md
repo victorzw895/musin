@@ -1,17 +1,45 @@
-IMPROVISATION APP
+MUSIN
+
+# Description
+
+Musin is a web app for musicians who like to listen and play along to their favorite songs. It uses spotify API and GuitarParty API to allow users to search a song to play from spotify and the chords for the song.
+There is also a built in digital piano that can be played along with the songs if there is no instrument on hand.
+
+# Motivation
+
+This app came from my passion for music and is a modified version of the original idea. Originally I wanted to build an app that would allow users to play their instruments at any place, any time without a physical instrument.
+It would definitely use the spotify API and the GuitarParty API to provide the song and chords, however it would also make use of a motion sensor to detect up and down strumming patterns for guitarists or hand location for pianists.
+The first iteration and most basic form is this current project. The second one would make use of a leap motion controller and the final iteration would make use of device like a arduino along with muscle sensors.
+
+# Table of Contents
+
+# Features
+
+- View available chords for songs
+- Autoscroll through song chords and lyrics for seamless playing
+- Search and play songs from spotify
+- Built in digital piano that used through keyboard inputs
+
+# Usage
+
+NOTE: In order to use the keyboard it has to be selected first by pressing TAB until the keyboard is highligted in orange.
+
+# Technologies
+
+React, Tone.js, Tonejs-instruments.js library, Spotify API, GuitarParty API
 
 # TODO
 
-1. Keyboard keys CSS, highlight ones being pressed
-2. Error handling / Validations.
-   - If song search returns no songs
-   - If selected song has no chords
+1. ~~Keyboard keys CSS, highlight ones being pressed~~
+2. ~~Error handling / Validations.~~
+   - ~~If song search returns no songs~~
+   - ~~If selected song has no chords~~
    - If song chords are not in original key
 3. Add Original key info, add transposer
 4. Get new chord images from different API
 5. Consider not using Spotify iframe and build own player.
    - To sync play button with autoscroll
-6. Overall CSS
+6. ~~Overall CSS~~
 7. Leap Motion
 
 # Challenges
@@ -39,71 +67,6 @@ IMPROVISATION APP
 - Translating its position to a 2D environment is not too complicated, however detecting whether a finger is moving downwards to press on a piano key is where the challenge lies.
 - Need to detect all fingers at all times
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Credits
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Thanks so much to Joel, Rashida, Linna and Charlie for continuous support and assistance throught the course and this project!
