@@ -1,4 +1,6 @@
-MUSIN
+[MUSIN](https://victorzw895.github.io/musin/)
+
+![Musin](./public/Musing.jpg "Musin")
 
 # Description
 
@@ -21,6 +23,8 @@ The first iteration and most basic form is this current project. The second one 
 - Built in digital piano that used through keyboard inputs
 
 # Usage
+
+![Select keyboard](./public/highlighted-piano.jpg "Select Keyboard")
 
 NOTE: In order to use the keyboard it has to be selected first by pressing TAB until the keyboard is highligted in orange.
 
