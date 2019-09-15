@@ -28,6 +28,8 @@ The first iteration and most basic form is this current project. The second one 
 
 NOTE: In order to use the keyboard it has to be selected first by pressing TAB until the keyboard is highligted in orange.
 
+To use autoscroll feature, click on Start Scroll after playing the song on spotify's iframe music player
+
 # Technologies
 
 React, Tone.js, Tonejs-instruments.js library, Spotify API, GuitarParty API
