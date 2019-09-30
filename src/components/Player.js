@@ -21,7 +21,8 @@ export default class Player extends Component {
       songDuration: 0,
       totalChords: 0,
       result: "Loading...",
-      uri: ""
+      uri: "",
+      timeouts: []
     };
     this.selectSong = this.selectSong.bind(this);
     this.fetchChords = this.fetchChords.bind(this);
@@ -91,24 +92,42 @@ export default class Player extends Component {
     });
   }
 
-  startScroll() {
-    const { chordsPerChordline, songDuration, totalChords } = this.state;
+  async startScroll() {
+    const {
+      chordsPerChordline,
+      songDuration,
+      totalChords,
+      timeouts
+    } = this.state;
     let $chords = $("#song-chords");
 
     let durationPerChordline = [];
     let scroll = 0;
     let durationCount = 0;
 
-    for (let i = 0; i < chordsPerChordline.length; i++) {
-      let duration = (songDuration / totalChords) * chordsPerChordline[i];
-      durationPerChordline.push(duration);
-      durationCount += duration;
-      // console.log($(`.chordline:eq(${i})`).height());
+    if (timeouts.length > 0) {
+      timeouts.forEach(clearTimeout);
+      // for (let i = 0; i < timeouts.length; i++) {
+      //   clearTimeout(timeouts[i]);
+      //   console.log("keeping top");
+      $chords.scrollTop(0);
+      this.setState({ timeouts: [] });
+      // }
+      // await timeouts.forEach(clearTimeout);
+    } else {
+      for (let i = 0; i < chordsPerChordline.length; i++) {
+        let duration = (songDuration / totalChords) * chordsPerChordline[i];
+        durationPerChordline.push(duration);
+        durationCount += duration;
+        // console.log($(`.chordline:eq(${i})`).height());
 
-      setTimeout(() => {
-        scroll += $(`.chordline:eq(${i})`).height();
-        $chords.scrollTop(scroll);
-      }, durationCount);
+        timeouts.push(
+          setTimeout(() => {
+            scroll += $(`.chordline:eq(${i})`).height();
+            $chords.scrollTop(scroll);
+          }, durationCount)
+        );
+      }
     }
   }
 

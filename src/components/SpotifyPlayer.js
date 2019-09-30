@@ -139,6 +139,7 @@ export default class SpotifyPlayer extends Component {
 
   onStopClick() {
     this.player.nextTrack();
+    this.props.startScroll();
   }
 
   render() {
@@ -167,7 +168,16 @@ export default class SpotifyPlayer extends Component {
             <p>Track: {trackName}</p>
             <p>Album: {albumName}</p>
             <Button.Group icon>
-              <Button icon onClick={() => this.onPlayClick()}>
+              {playing && clicked ? (
+                <Button onClick={() => this.onStopClick()}>
+                  <Icon name="stop" />
+                </Button>
+              ) : (
+                <Button icon onClick={() => this.onPlayClick()}>
+                  <Icon name="play" />
+                </Button>
+              )}
+              {/* <Button icon onClick={() => this.onPlayClick()}>
                 {playing && clicked ? (
                   <Icon name="pause" />
                 ) : (
@@ -176,7 +186,7 @@ export default class SpotifyPlayer extends Component {
               </Button>
               <Button onClick={() => this.onStopClick()}>
                 <Icon name="stop" />
-              </Button>
+              </Button> */}
             </Button.Group>
           </div>
         ) : (
