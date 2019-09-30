@@ -8,12 +8,13 @@ export default class SearchSong extends Component {
     this._handleClick = this._handleClick.bind(this);
   }
 
-  _handleClick(id, songName, artistName, duration) {
-    this.props.loadSong(id, songName, artistName, duration);
+  _handleClick(id, songName, artistName, duration, uri) {
+    this.props.loadSong(id, songName, artistName, duration, uri);
   }
 
   render() {
     const { searchResults } = this.props;
+    console.log(searchResults);
     return (
       <List
         animated
@@ -38,7 +39,8 @@ export default class SearchSong extends Component {
                 song.id,
                 song.name,
                 song.artists[0].name,
-                song.duration_ms
+                song.duration_ms,
+                song.uri
               )
             }
           >

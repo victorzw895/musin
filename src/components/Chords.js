@@ -32,7 +32,8 @@ export default class Chords extends Component {
 
     return (
       <div>
-        {iframe}
+        {/* {iframe} */}
+        {/* <SpotifyPlayer /> */}
         {song.length === 0 ? null : (
           <Segment style={{ width: "30vw", marginLeft: "9vw" }}>
             {song[0].chords.map(chords => (

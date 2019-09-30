@@ -99,7 +99,7 @@ export default class Keyboard extends Component {
   _handleMouseDown(e) {
     const { freq } = e.target.dataset;
     if (freq) {
-      e.preventDefault();
+      // e.preventDefault();
       this.state.instrument.triggerAttack(
         Tone.Frequency(freq, "midi").toNote()
       );
@@ -109,7 +109,7 @@ export default class Keyboard extends Component {
   _handleMouseUp(e) {
     const { freq } = e.target.dataset;
     if (freq) {
-      e.preventDefault();
+      // e.preventDefault();
       this.state.instrument.triggerRelease(
         Tone.Frequency(freq, "midi").toNote()
       );
@@ -231,12 +231,7 @@ export default class Keyboard extends Component {
   render() {
     const { playingKeys } = this.state;
     return (
-      <div
-        id="content"
-        onKeyDown={this._handleKeyDown}
-        onKeyUp={this._handleKeyUp}
-        tabIndex="0"
-      >
+      <div id="content">
         <h3 id="loading">Loading...</h3>
 
         <div id="container">
@@ -244,6 +239,9 @@ export default class Keyboard extends Component {
             id="keyboard"
             onMouseDown={this._handleMouseDown}
             onMouseUp={this._handleMouseUp}
+            onKeyDown={this._handleKeyDown}
+            onKeyUp={this._handleKeyUp}
+            tabIndex="0"
           >
             {this.state.keys.map(key => (
               <li

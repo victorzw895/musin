@@ -4,6 +4,7 @@ import SearchForm from "./SearchForm";
 import SearchSong from "./SearchSong";
 import * as $ from "jquery";
 import { Divider, Grid, Header, Segment } from "semantic-ui-react";
+import SpotifyPlayer from "./SpotifyPlayer";
 
 // DATABASE REQUESTS
 const Api = require("../lib/Api.js");
@@ -19,7 +20,8 @@ export default class Player extends Component {
       chordsPerChordline: [],
       songDuration: 0,
       totalChords: 0,
-      result: "Loading..."
+      result: "Loading...",
+      uri: ""
     };
     this.selectSong = this.selectSong.bind(this);
     this.fetchChords = this.fetchChords.bind(this);
@@ -28,11 +30,11 @@ export default class Player extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        currentTime: new Date().getSeconds()
-      });
-    }, 1000);
+    // setInterval(() => {
+    //   this.setState({
+    //     currentTime: new Date().getSeconds()
+    //   });
+    // }, 1000);
   }
 
   fetchSongs(query) {
@@ -41,8 +43,14 @@ export default class Player extends Component {
     });
   }
 
-  selectSong(id, songName, artistName, duration) {
-    this.setState({ songId: id, songDuration: duration, songName, artistName });
+  selectSong(id, songName, artistName, duration, uri) {
+    this.setState({
+      songId: id,
+      songDuration: duration,
+      songName,
+      artistName,
+      uri
+    });
     this.fetchChords(songName, artistName);
   }
 
@@ -59,7 +67,8 @@ export default class Player extends Component {
           song.authors.some(author => author.name === artistName)
         );
         this.setState({ loadedSong: results });
-        if (results.length !== 0) {
+        console.log(results);
+        if (results.length === 0) {
           this.setState({ result: "No Chords Available" });
         }
         this.getChordInfo(results[0]);
@@ -110,7 +119,8 @@ export default class Player extends Component {
       searchResults,
       songName,
       artistName,
-      result
+      result,
+      uri
     } = this.state;
     const { token } = this.props;
 
@@ -129,11 +139,16 @@ export default class Player extends Component {
             <Grid.Row verticalAlign="middle">
               <Grid.Column>
                 <SearchForm search={this.fetchSongs} />
-                <Chords
+                <SpotifyPlayer
+                  token={token}
+                  uri={uri}
+                  startScroll={this.startScroll}
+                />
+                {/* <Chords
                   song={loadedSong}
                   songId={songId}
                   startScroll={this.startScroll}
-                />
+                /> */}
               </Grid.Column>
 
               <Grid.Column>
