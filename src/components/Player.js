@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Chords from "./Chords";
 import SearchForm from "./SearchForm";
 import SearchSong from "./SearchSong";
@@ -8,6 +8,11 @@ import SpotifyPlayer from "./SpotifyPlayer";
 
 // DATABASE REQUESTS
 const Api = require("../lib/Api.js");
+
+// const Player = () => {
+//   const [songId, setSongId] = useState("");
+//   const [loadedSong, setLoadedSong] = useState([]);
+// };
 
 export default class Player extends Component {
   constructor() {
