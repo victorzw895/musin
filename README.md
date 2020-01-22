@@ -19,6 +19,11 @@ The first iteration and most basic form is this current project. The second one 
 
 # Table of Contents
 
+# Current Bugs
+
+- Guitar Party API no longer serves content over HTTPS, which causes mixed content error with Spotify's API. Unable to get Guitar Chords and lyrics to load and display.
+- Player immediately plays selected song, unintentionally.
+
 # Features
 
 - View available chords for songs
